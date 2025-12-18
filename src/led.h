@@ -16,6 +16,9 @@ extern MD_MAX72XX mx;
 
 // Function prototype
 void initLED();
-void countDownLED();
+bool countDownLED();
+void startLedTimer();
+void turnOnLED(int index);
+
 
 #endif

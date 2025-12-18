@@ -32,19 +32,22 @@ void initSpeaker()
       MAX98357A_I2S_LRC,
       MAX98357A_I2S_DOUT);
 
-  audio.setVolume(1);
+  audio.setVolume(50);
 }
 
 // ===== Playback logic =====
 int playStart()
 {
-  if (!audio.isRunning() && playCount <= 0)
+  if (!audio.isRunning() && playCount <= 2)
   {
     Serial.println("Start, count: " + String(playCount));
     audio.connecttoFS(SPIFFS, "/mario-start.wav");
     playCount++;
+  } else if (!audio.isRunning() && playCount == 3){
+    Serial.println("End, count: " + String(playCount));
+    audio.connecttoFS(SPIFFS, "/mario-end.wav");
+    playCount++;
   }
-
   audio.loop();
   return playCount;
 }

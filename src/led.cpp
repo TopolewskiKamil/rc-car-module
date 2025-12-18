@@ -1,5 +1,5 @@
 #include "led.h"
-#include "speaker.h"   // 👈 NEW
+#include "speaker.h" 
 #include <SPI.h>
 
 // Define the global MAX7219 object here (ONLY once)
@@ -11,6 +11,8 @@ MD_MAX72XX mx = MD_MAX72XX(
     MAX_DEVICES
 );
 
+static unsigned long startTimeLED = 0;
+
 void initLED()
 {
     mx.begin();
@@ -18,16 +20,41 @@ void initLED()
     mx.clear();
 }
 
-void countDownLED()
-{ 
-    for (int dev = 0; dev < 3; dev++) {
-        for (int row = 0; row < 8; row++)
-            mx.setRow(dev, row, 0xFF);
-        delay(1000);
-    }
+void startLedTimer(){
+    startTimeLED = millis();
+}
 
+void turnOnLED(int index){
+    for (int row = 0; row < 8; row++)
+        mx.setRow(index, row, 0xFF);
+}
+
+void turnOffLed(){
     for (int dev = 0; dev < 3; dev++) {
         for (int row = 0; row < 8; row++)
             mx.setRow(dev, row, 0x00);
     }
+}
+
+bool countDownLED()
+{ 
+    
+    unsigned long elapsed = millis() - startTimeLED;
+    playStart();
+    if (elapsed > 0){
+        turnOnLED(0);
+    }
+    if (elapsed > 1000){
+        turnOnLED(1);
+    }
+    if (elapsed > 2000){
+        turnOnLED(2);
+    }
+
+    if (elapsed > 3000){
+        turnOffLed();
+        return true;
+    }
+
+    return false;
 }

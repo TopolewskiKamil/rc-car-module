@@ -17,27 +17,25 @@ void setup()
 
 void loop()
 {
-  playStart();
-  playEnd();
-
-  
     static bool ledSeqOn = false;
     static bool timerOn = false;
 
-    if (digitalRead(BTN_PIN)) ledSeqOn = true;
+    if (digitalRead(BTN_PIN)) {
+        timerOn = false;
+        ledSeqOn = true;
+        startLedTimer();
+    }
 
     if (ledSeqOn)
     {
-        countDownLED();
-        ledSeqOn = false;
+        ledSeqOn = !countDownLED();
         timerOn = true;
         startTimer();     
     }
 
-    if (timerOn)
-    {
-        updateTimer();  
-    }
-
-    // delay(100);
+    // if (timerOn)
+    // {
+    //     updateTimer();  
+    //     delay(100);
+    // }
 }
