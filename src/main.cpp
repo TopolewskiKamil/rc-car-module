@@ -8,31 +8,26 @@
 void setup()
 {
     Serial.begin(9600);
-
     initLED();      // from led.cpp
     initTimer();    // from timer.cpp
 }
 
 void loop()
 {
-    static bool start_seq = false;
-    static bool led_finished = false;
+    static bool ledSeqOn = false;
+    static bool timerOn = false;
 
-    if (digitalRead(BTN_PIN))
-    {
-        Serial.println("Clicked");
-        start_seq = true;
-    }
+    if (digitalRead(BTN_PIN)) ledSeqOn = true;
 
-    if (start_seq)
+    if (ledSeqOn)
     {
         countDownLED();
-        start_seq = false;
-        led_finished = true;
+        ledSeqOn = false;
+        timerOn = true;
         startTimer();     
     }
 
-    if (led_finished)
+    if (timerOn)
     {
         updateTimer();  
     }
