@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "led.h"
 #include "timer.h"
+#include "speaker.h"
 
-// Button
 #define BTN_PIN 19
 
 void setup()
@@ -10,10 +10,17 @@ void setup()
     Serial.begin(9600);
     initLED();      // from led.cpp
     initTimer();    // from timer.cpp
+    initSPIFFS();
+    initSpeaker();
+    delay(500);
 }
 
 void loop()
 {
+  playStart();
+  playEnd();
+
+  
     static bool ledSeqOn = false;
     static bool timerOn = false;
 
@@ -32,5 +39,5 @@ void loop()
         updateTimer();  
     }
 
-    delay(100);
+    // delay(100);
 }
