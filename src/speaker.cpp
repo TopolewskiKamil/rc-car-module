@@ -11,7 +11,6 @@
 // ===== Module-private objects & state =====
 static Audio audio;
 
-static int playCount = 0;
 static bool started = false;
 
 // ===== Initialization =====
@@ -36,32 +35,32 @@ void initSpeaker()
 }
 
 // ===== Playback logic =====
-int playStart()
+int playStart(int playCount)
 {
   if (!audio.isRunning() && playCount <= 2)
   {
     Serial.println("Start, count: " + String(playCount));
     audio.connecttoFS(SPIFFS, "/mario-start.wav");
     playCount++;
-  } else if (!audio.isRunning() && playCount == 3){
-    Serial.println("End, count: " + String(playCount));
-    audio.connecttoFS(SPIFFS, "/mario-end.wav");
-    playCount++;
-  }
+  } 
+  
   audio.loop();
   return playCount;
 }
 
-int playEnd()
+int playEnd(int speakerEndState)
 {
-  if (!audio.isRunning() && playCount == 1)
+  bool audioRunning = audio.isRunning();
+  if (!audioRunning && speakerEndState == 0)
   {
-    started = true;
-    Serial.println("End, count: " + String(playCount));
+    Serial.println("End, count: ");
     audio.connecttoFS(SPIFFS, "/mario-end.wav");
-    playCount++;
+    speakerEndState = 1;
+  } else if (!audioRunning){
+    Serial.println("Finish");
+    speakerEndState = 2;
   }
-
+  Serial.print("Play");
   audio.loop();
-  return playCount;
+  return speakerEndState;
 }

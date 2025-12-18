@@ -19,23 +19,32 @@ void loop()
 {
     static bool ledSeqOn = false;
     static bool timerOn = false;
+    static int speakerEndState = 0;
 
     if (digitalRead(BTN_PIN)) {
         timerOn = false;
         ledSeqOn = true;
         startLedTimer();
+        // speakerEnd = false;
     }
 
     if (ledSeqOn)
     {
-        ledSeqOn = !countDownLED();
-        timerOn = true;
+        bool ledFinished = countDownLED();
+        ledSeqOn = !ledFinished;
+        timerOn = ledFinished;
         startTimer();     
     }
 
-    // if (timerOn)
-    // {
+    if (timerOn)
+    {
+        if (speakerEndState != 2){
+            speakerEndState = playEnd(speakerEndState);
+        } else {
+            timerOn = false;
+            speakerEndState = 0;
+        }
     //     updateTimer();  
     //     delay(100);
-    // }
+    }
 }

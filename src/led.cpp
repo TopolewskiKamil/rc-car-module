@@ -12,6 +12,7 @@ MD_MAX72XX mx = MD_MAX72XX(
 );
 
 static unsigned long startTimeLED = 0;
+static int playCount = 0;
 
 void initLED()
 {
@@ -40,19 +41,20 @@ bool countDownLED()
 { 
     
     unsigned long elapsed = millis() - startTimeLED;
-    playStart();
-    if (elapsed > 0){
+    playCount = playStart(playCount);
+    if (playCount == 1){
         turnOnLED(0);
     }
-    if (elapsed > 1000){
+    if (playCount == 2){
         turnOnLED(1);
     }
-    if (elapsed > 2000){
+    if (playCount == 3){
         turnOnLED(2);
     }
 
-    if (elapsed > 3000){
+    if (elapsed > 4000){
         turnOffLed();
+        playCount = 0;
         return true;
     }
 

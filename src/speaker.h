@@ -7,7 +7,7 @@
 void initSPIFFS();
 void initSpeaker();
 
-int playStart();
-int playEnd();
+int playStart(int playCount);
+int playEnd(int state);
 
 #endif // SPEAKER_H
