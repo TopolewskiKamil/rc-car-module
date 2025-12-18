@@ -4,6 +4,7 @@
 #include "speaker.h"
 
 #define BTN_PIN 19
+#define BREAK_BEAM_PIN 25 
 
 void setup()
 {
@@ -12,11 +13,13 @@ void setup()
     initTimer();    // from timer.cpp
     initSPIFFS();
     initSpeaker();
+    pinMode(BREAK_BEAM_PIN, INPUT_PULLUP);
     delay(500);
 }
 
 void loop()
 {
+
     static bool ledSeqOn = false;
     static bool timerOn = false;
     static int speakerEndState = 0;
@@ -26,7 +29,6 @@ void loop()
         ledSeqOn = true;
         startLedTimer();
         endTimer();
-        // speakerEnd = false;
     }
 
     if (ledSeqOn)
@@ -39,8 +41,13 @@ void loop()
 
     if (timerOn)
     {
+        bool broken = (digitalRead(BREAK_BEAM_PIN) == LOW);
+
+        if (broken == HIGH){
+            timerOn = false;
+        }
         turnOffLed();
         updateTimer();  
-    //     delay(100);
+
     }
 }

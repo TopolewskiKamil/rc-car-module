@@ -51,4 +51,17 @@ void updateTimer()
     };
 
     display.setSegments(data);
+    delay(50);
+}
+
+void clearTimer()
+{
+    uint8_t data[] = {
+        display.encodeDigit(0),
+        display.encodeDigit(0),
+        display.encodeDigit(0),
+        display.encodeDigit(0)
+    };
+
+    display.setSegments(data);
 }
