@@ -52,7 +52,7 @@ bool countDownLED()
         turnOnLED(2);
     }
 
-    if (elapsed > 4000){
+    if (elapsed > 5000){
         playCount = 0;
         return true;
     }

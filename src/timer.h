@@ -10,6 +10,8 @@ void initTimer();
 void startTimer();
 
 // Call repeatedly from loop() to update display
-long updateTimer(long lastCycle);
+void updateTimer();
+
+void endTimer();
 
 #endif

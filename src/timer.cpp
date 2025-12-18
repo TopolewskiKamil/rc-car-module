@@ -26,11 +26,16 @@ void startTimer()
     running = true;
 }
 
-long updateTimer(long lastCycle)
+void endTimer()
+{
+    running = true;
+}
+
+void updateTimer()
 {
     
-    if (!running || millis() - lastCycle < 500)
-        return lastCycle;
+    if (!running)
+        return;
 
     unsigned long elapsed = millis() - startTime;
 
@@ -46,5 +51,4 @@ long updateTimer(long lastCycle)
     };
 
     display.setSegments(data);
-    return millis();
 }

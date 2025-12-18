@@ -5,7 +5,6 @@
 
 #define BTN_PIN 19
 
-static unsigned long lastCycle = 0;
 void setup()
 {
     Serial.begin(9600);
@@ -14,7 +13,6 @@ void setup()
     initSPIFFS();
     initSpeaker();
     delay(500);
-    lastCycle = millis();
 }
 
 void loop()
@@ -27,6 +25,7 @@ void loop()
         timerOn = false;
         ledSeqOn = true;
         startLedTimer();
+        endTimer();
         // speakerEnd = false;
     }
 
@@ -41,14 +40,7 @@ void loop()
     if (timerOn)
     {
         turnOffLed();
-        if (speakerEndState != 2){
-            speakerEndState = playEnd(speakerEndState);
-            turnOffLed();
-        } else {
-            // timerOn = false;
-            // speakerEndState = 0;
-        }
-        lastCycle = updateTimer(lastCycle);  
+        updateTimer();  
     //     delay(100);
     }
 }

@@ -31,15 +31,12 @@ void initSpeaker()
       MAX98357A_I2S_LRC,
       MAX98357A_I2S_DOUT);
 
-  audio.setVolume(50);
+  audio.setVolume(5);
 }
 
 // ===== Playback logic =====
 int playStart(int playCount)
 {
-  if(!audio.isRunning()){
-    delay(20); 
-  }
   if (!audio.isRunning() && playCount <= 2)
   {
     Serial.println("Start, count: " + String(playCount));
