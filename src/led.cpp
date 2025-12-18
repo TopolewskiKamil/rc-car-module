@@ -53,7 +53,6 @@ bool countDownLED()
     }
 
     if (elapsed > 4000){
-        turnOffLed();
         playCount = 0;
         return true;
     }

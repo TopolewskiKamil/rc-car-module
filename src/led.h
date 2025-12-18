@@ -19,6 +19,7 @@ void initLED();
 bool countDownLED();
 void startLedTimer();
 void turnOnLED(int index);
+void turnOffLed();
 
 
 #endif

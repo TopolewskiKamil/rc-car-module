@@ -40,6 +40,7 @@ void loop()
     {
         if (speakerEndState != 2){
             speakerEndState = playEnd(speakerEndState);
+            turnOffLed();
         } else {
             timerOn = false;
             speakerEndState = 0;

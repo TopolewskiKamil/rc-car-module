@@ -37,6 +37,9 @@ void initSpeaker()
 // ===== Playback logic =====
 int playStart(int playCount)
 {
+  if(!audio.isRunning()){
+    delay(20); 
+  }
   if (!audio.isRunning() && playCount <= 2)
   {
     Serial.println("Start, count: " + String(playCount));
