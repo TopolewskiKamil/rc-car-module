@@ -35,9 +35,10 @@ void turnOnLED(int index){
         mx.setRow(index, row, 0xFF);
 }
 
-void turnOnLEDsSlowly(int index, int row2){
-    for (int row = 0; row < row2; row++){
+void turnOnLEDsSlowly(int index){
+    for (int row = 0; row < 8; row++){
         mx.setRow(index, row, 0xFF);
+        delay(200);
     }
 }
 
@@ -74,11 +75,7 @@ bool countDownLED()
 
 void loadingGameLED()
 { 
-    unsigned long elapsed = millis() - startTimeLED2;
-
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 8; j++){
-            mx.setRow(i, j, 0xFF);
-        }
-    }
+    turnOnLEDsSlowly(0);
+    turnOnLEDsSlowly(1);        
+    turnOnLEDsSlowly(2);
 }

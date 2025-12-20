@@ -22,44 +22,52 @@ void loop()
 
     static bool ledSeqOn = false;
     static bool timerOn = false;
+    static bool falseStart = false;
     static int speakerEndState = 0;
+    if (falseStart){
+        // playFalseStart();
+        Serial.println("False start");
+    } else {
 
-    if (digitalRead(BTN_PIN)) {
-        if (!ledSeqOn){
-            clearTimer();
-            timerOn = false;
-            ledSeqOn = true;
-            startLedTimer2();
-            loadingGameLED();
-            turnOffLed();
-            startLedTimer();
-            endTimer();
-        } else {
-            playFalseStart();
-            ledSeqOn = false;
-        }
-    }
-
-    if (ledSeqOn)
-    {
-        bool ledFinished = countDownLED();
-        ledSeqOn = !ledFinished;
-        timerOn = ledFinished;
-        startTimer();     
-    }
-
-    if (timerOn)
-    {
-        if (getTimeMillis() >= 10000){
-            bool broken = (digitalRead(BREAK_BEAM_PIN) == LOW);
-
-            if (broken == HIGH){
+        if (digitalRead(BTN_PIN)) {
+            if (!ledSeqOn){
+                clearTimer();
                 timerOn = false;
+                ledSeqOn = true;
+                startLedTimer2();
+                loadingGameLED();
+                turnOffLed();
+                startLedTimer();
+                endTimer();
+            } else {
+                ledSeqOn = false;
             }
         }
 
-        turnOffLed();
-        updateTimer();  
+        if (ledSeqOn)
+        {
+            if (digitalRead(BREAK_BEAM_PIN) == LOW){
+                falseStart = true;
+            }
+            bool ledFinished = countDownLED();
+            ledSeqOn = !ledFinished;
+            timerOn = ledFinished;
+            startTimer();     
+        }
+
+        if (timerOn)
+        {
+            if (getTimeMillis() >= 10000){
+                bool broken = (digitalRead(BREAK_BEAM_PIN) == LOW);
+
+                if (broken == HIGH){
+                    timerOn = false;
+                }
+            }
+
+            turnOffLed();
+            updateTimer();  
+        }
     }
 
 }
