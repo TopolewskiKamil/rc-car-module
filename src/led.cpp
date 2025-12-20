@@ -15,6 +15,10 @@ static unsigned long startTimeLED = 0;
 static unsigned long startTimeLED2 = 0;
 static int playCount = 0;
 
+void resetPlayCount(){
+    playCount = 0;
+}
+
 void initLED()
 {
     mx.begin();
@@ -72,11 +76,12 @@ void displayHUJ()
     static const uint8_t J[8] = { 0x3C, 0x18, 0x18, 0x18, 0x18, 0x98, 0x70, 0x00 };
 
     // Clear display then set each row on the three devices
+    // Write rows in reversed order so letters appear upright on the hardware
     turnOffLed();
     for (int row = 0; row < 8; row++) {
-        mx.setRow(0, row, H[row]);
-        mx.setRow(1, row, U[row]);
-        mx.setRow(2, row, J[row]);
+        mx.setRow(0, row, H[7 - row]);
+        mx.setRow(1, row, U[7 - row]);
+        mx.setRow(2, row, J[7 - row]);
     }
 }
 

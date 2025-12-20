@@ -19,7 +19,6 @@ void setup()
 
 void loop()
 {
-
     static bool ledSeqOn = false;
     static bool timerOn = false;
     static bool falseStart = false;
@@ -27,14 +26,10 @@ void loop()
     if (falseStart){
         ledSeqOn = false;
         timerOn = false;
+        resetPlayCount();
         turnOffLed();
-        for (int i = 0; i < 100; i++){
-            displayHUJ();
-            delay(20);
-            turnOffLed();
-            delay(10);
-
-        }
+        displayHUJ();
+        delay(3000);
         turnOffLed();
         falseStart = false;
     } else {
@@ -44,13 +39,11 @@ void loop()
                 clearTimer();
                 timerOn = false;
                 ledSeqOn = true;
-                startLedTimer2();
                 loadingGameLED();
                 turnOffLed();
+                delay(100);
                 startLedTimer();
                 endTimer();
-            } else {
-                ledSeqOn = false;
             }
         }
 

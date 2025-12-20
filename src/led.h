@@ -21,6 +21,7 @@ void startLedTimer();
 void turnOnLED(int index);
 void turnOffLed();
 void turnOnRandom();void displayHUJ();void loadingGameLED();
+void resetPlayCount();
 void startLedTimer2();
 
 
