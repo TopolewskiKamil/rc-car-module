@@ -25,10 +25,19 @@ void loop()
     static int speakerEndState = 0;
 
     if (digitalRead(BTN_PIN)) {
-        timerOn = false;
-        ledSeqOn = true;
-        startLedTimer();
-        endTimer();
+        if (!ledSeqOn){
+            clearTimer();
+            timerOn = false;
+            ledSeqOn = true;
+            startLedTimer2();
+            loadingGameLED();
+            turnOffLed();
+            startLedTimer();
+            endTimer();
+        } else {
+            playFalseStart();
+            ledSeqOn = false;
+        }
     }
 
     if (ledSeqOn)
@@ -51,6 +60,6 @@ void loop()
 
         turnOffLed();
         updateTimer();  
-
     }
+
 }

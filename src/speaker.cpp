@@ -48,6 +48,19 @@ int playStart(int playCount)
   return playCount;
 }
 
+void playFalseStart()
+{
+  // Play the start sound once when the audio system is idle
+  if (!audio.isRunning())
+  {
+    Serial.println("False start");
+    audio.connecttoFS(SPIFFS, "/mario-start.wav");
+  }
+
+  // Keep the audio engine running
+  audio.loop();
+}
+
 int playEnd(int speakerEndState)
 {
   bool audioRunning = audio.isRunning();

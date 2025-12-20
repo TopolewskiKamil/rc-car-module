@@ -12,6 +12,7 @@ MD_MAX72XX mx = MD_MAX72XX(
 );
 
 static unsigned long startTimeLED = 0;
+static unsigned long startTimeLED2 = 0;
 static int playCount = 0;
 
 void initLED()
@@ -25,9 +26,19 @@ void startLedTimer(){
     startTimeLED = millis();
 }
 
+void startLedTimer2(){
+    startTimeLED2 = millis();
+}
+
 void turnOnLED(int index){
     for (int row = 0; row < 8; row++)
         mx.setRow(index, row, 0xFF);
+}
+
+void turnOnLEDsSlowly(int index, int row2){
+    for (int row = 0; row < row2; row++){
+        mx.setRow(index, row, 0xFF);
+    }
 }
 
 void turnOffLed(){
@@ -58,4 +69,16 @@ bool countDownLED()
     }
 
     return false;
+}
+
+
+void loadingGameLED()
+{ 
+    unsigned long elapsed = millis() - startTimeLED2;
+
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 8; j++){
+            mx.setRow(i, j, 0xFF);
+        }
+    }
 }
