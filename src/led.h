@@ -20,7 +20,7 @@ bool countDownLED();
 void startLedTimer();
 void turnOnLED(int index);
 void turnOffLed();
-void loadingGameLED();
+void turnOnRandom();void displayHUJ();void loadingGameLED();
 void startLedTimer2();
 
 

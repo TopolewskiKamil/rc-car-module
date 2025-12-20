@@ -25,8 +25,18 @@ void loop()
     static bool falseStart = false;
     static int speakerEndState = 0;
     if (falseStart){
-        // playFalseStart();
-        Serial.println("False start");
+        ledSeqOn = false;
+        timerOn = false;
+        turnOffLed();
+        for (int i = 0; i < 100; i++){
+            displayHUJ();
+            delay(20);
+            turnOffLed();
+            delay(10);
+
+        }
+        turnOffLed();
+        falseStart = false;
     } else {
 
         if (digitalRead(BTN_PIN)) {

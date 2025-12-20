@@ -9,6 +9,6 @@ void initSpeaker();
 
 int playStart(int playCount);
 int playEnd(int state);
-void playFalseStart();
+bool playFalseStart();
 
 #endif // SPEAKER_H

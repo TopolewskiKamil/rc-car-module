@@ -12,6 +12,7 @@
 static Audio audio;
 
 static bool started = false;
+static bool falseStartActive = false;
 
 // ===== Initialization =====
 void initSPIFFS()
@@ -48,17 +49,27 @@ int playStart(int playCount)
   return playCount;
 }
 
-void playFalseStart()
+bool playFalseStart()
 {
-  // Play the start sound once when the audio system is idle
-  if (!audio.isRunning())
+  // Start the false-start sound only when audio is idle
+  if (!audio.isRunning() && !falseStartActive)
   {
     Serial.println("False start");
-    audio.connecttoFS(SPIFFS, "/mario-start.wav");
+    audio.connecttoFS(SPIFFS, "/f1-cut.wav");
+    falseStartActive = true;
   }
 
   // Keep the audio engine running
   audio.loop();
+
+  // If we started the false-start and audio finished, report completion
+  if (falseStartActive && !audio.isRunning())
+  {
+    falseStartActive = false;
+    return true;
+  }
+
+  return false;
 }
 
 int playEnd(int speakerEndState)
