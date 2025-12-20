@@ -41,11 +41,14 @@ void loop()
 
     if (timerOn)
     {
-        bool broken = (digitalRead(BREAK_BEAM_PIN) == LOW);
+        if (getTimeMillis() >= 10000){
+            bool broken = (digitalRead(BREAK_BEAM_PIN) == LOW);
 
-        if (broken == HIGH){
-            timerOn = false;
+            if (broken == HIGH){
+                timerOn = false;
+            }
         }
+
         turnOffLed();
         updateTimer();  
 

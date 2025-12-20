@@ -14,4 +14,6 @@ void updateTimer();
 
 void endTimer();
 
+long getTimeMillis();
+
 #endif

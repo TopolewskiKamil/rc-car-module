@@ -29,6 +29,11 @@ void startTimer()
     running = true;
 } 
 
+long getTimeMillis()
+{
+    return millis() - startTime;
+}
+
 void endTimer()
 {
     running = false;
