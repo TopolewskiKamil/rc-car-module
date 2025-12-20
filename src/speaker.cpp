@@ -31,7 +31,7 @@ void initSpeaker()
       MAX98357A_I2S_LRC,
       MAX98357A_I2S_DOUT);
 
-  audio.setVolume(5);
+  audio.setVolume(100);
 }
 
 // ===== Playback logic =====
